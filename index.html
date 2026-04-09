@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charse="UTF-8">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="app">
-            <p>CHROMATIC</p>
-        </div>
-        <script src="renderer.js"></script>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="drag-region">
+    <div id="drag-handle"></div>
+  </div>
+  <div id="app">
+    <svg id="nav-ring" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="inner-circle"></div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
 </html>
