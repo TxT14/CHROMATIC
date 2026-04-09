@@ -1,0 +1,24 @@
+{
+  "name": "chromatic",
+  "version": "1.0.0",
+  "description": "Color tool designed for designers.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TxT14/CHROMATIC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TxT14/CHROMATIC/issues"
+  },
+  "homepage": "https://github.com/TxT14/CHROMATIC#readme",
+  "devDependencies": {
+    "electron": "^41.2.0"
+  }
+}

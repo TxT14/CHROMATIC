@@ -1,0 +1,1 @@
+console.log('CHROMATIC renderer loaded')

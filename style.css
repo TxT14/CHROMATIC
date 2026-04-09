@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 500px;
+    height: 500px;
+    background: transparent;
+    overflow: hidden;
+    -webkit-app-region: drag;
+}
+
+#app {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: sans-serif;
+}
