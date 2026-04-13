@@ -6,10 +6,10 @@ A floating circular desktop app for color work. No title bar, no window borders,
 
 CHROMATIC is a lightweight color tool built for designers and developers. It lives on your desktop as a floating circle, always accessible, never in the way. Built with Electron.
 
-## Tools
+## Tabs
 
-| # | Tool | Description |
-|---|------|-------------|
+| # | Tab | Description |
+|---|-----|-------------|
 | 1 | Hex previewer | Preview colors and convert between colortypes |
 | 2 | Color library | Save and organize colors and palettes |
 | 3 | Pipet tool | Pick colors directly from your screen |

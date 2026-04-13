@@ -1,4 +1,4 @@
-const TOOLS = [
+const TABS = [
   {id: 'hex',       name: 'Hex previewer',      color: '#E8A87C',   icon: '-' },
   {id: 'library',   name: 'Color library',      color: '#85C1E9',   icon: '-' },
   {id: 'pipet',     name: 'Pipet tool',         color: '#82E0AA',   icon: '-' },
@@ -11,25 +11,25 @@ const SETTINGS = { id: 'settings', name: 'Settings', color: '#A0A8C0', icon: '-'
 
 let activeIndex = 0
 
-const svg = document.getElementById('nav-ring')
+const ring = document.getElementById('ring')
 
 const cx = 250
 const cy = 250
 const outerR = 245
 const innerR = 170
 
-const NUM_TOOLS = TOOLS.length;
+const NUM_TABS = TABS.length;
 const SETTINGS_ANGLE = 40;
 const GAP_ANGLE = 0;
-const totalGapAngle = (NUM_TOOLS + 1) * GAP_ANGLE;
-const availableAngleForTools = 360 - SETTINGS_ANGLE - totalGapAngle;
-const toolAngle = availableAngleForTools / NUM_TOOLS;
+const totalGapAngle = (NUM_TABS + 1) * GAP_ANGLE;
+const availableAngleForTabs = 360 - SETTINGS_ANGLE - totalGapAngle;
+const tabAngle = availableAngleForTabs / NUM_TABS;
 const segments = [];
 let currentAngle = 90 + (SETTINGS_ANGLE / 2);
-for (let i = 0; i < NUM_TOOLS; i++) {
+for (let i = 0; i < NUM_TABS; i++) {
     const startAngle = currentAngle;
-    const endAngle = currentAngle + toolAngle;
-    segments.push({ start: startAngle, end: endAngle, type: 'tool' });
+    const endAngle = currentAngle + tabAngle;
+    segments.push({ start: startAngle, end: endAngle, type: 'tab' });
     currentAngle = endAngle + GAP_ANGLE;
 }
 const settingsStart = currentAngle;
@@ -68,32 +68,42 @@ function makeSegment(startDeg, endDeg, color, index) {
   return path;
 }
 
-function activateSegment(index) {
+function updateRing(index) {
+  const seg = segments[index]
   segments.forEach((s, i) => {
     const el = document.getElementById(`segment-${i}`)
     const resetColor = s.type === 'settings' ? '#2a2a3e' : '#1a1a2e'
     el.setAttribute('fill', resetColor)
   })
-  const innerCircle = document.getElementById('inner-circle');
-  const seg = segments[index]
-  const tool = seg.type === 'settings' ? SETTINGS : TOOLS[index]
-  innerCircle.textContent = tool.name;
-  innerCircle.style.backgroundColor = tool.color
   const activeColor = seg.type === 'settings' ? '#0ff507' : '#8d92e4'
-  const segmentElement = document.getElementById(`segment-${index}`)
-  segmentElement.setAttribute('fill', activeColor)
+  const segmentEl = document.getElementById(`segment-${index}`)
+  segmentEl.setAttribute('fill', activeColor)
+}
+
+function updateContent(index) {
+  const seg = segments[index]
+  const content = document.getElementById('content')
+  const tab = seg.type === 'settings' ? SETTINGS : TABS[index]
+  content.textContent = tab.name
+  content.style.backgroundColor = tab.color
+}
+
+function activateTab(index) {
+  updateRing(index)
+  updateContent(index)
+  activeIndex = index
 }
 
 segments.forEach((seg, index) => {
   const color = seg.type === 'settings' ? '#2a2a3e' : '#1a1a2e';
   const path = makeSegment(seg.start, seg.end, color, index);
-  svg.appendChild(path);
+  ring.appendChild(path);
 });
 
 segments.forEach((seg, index) => {
-  const segmentElement = document.getElementById(`segment-${index}`);
-  segmentElement.addEventListener('click', () => {
-    activateSegment(index)
+  const segmentEl = document.getElementById(`segment-${index}`);
+  segmentEl.addEventListener('click', () => {
+    activateTab(index)
   });
 });
 
@@ -104,6 +114,12 @@ window.addEventListener('wheel', (e) => {
     } else {
       activeIndex = (activeIndex - 1 + segments.length) % segments.length
     }
-    activateSegment(activeIndex)
+    updateRing(activeIndex)
+  }
+});
+
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'Control') {
+    updateContent(activeIndex)
   }
 });
