@@ -1,3 +1,3 @@
-# SHORTCUTS
+## SHORTCUTS
 
 - **CTRL + scroll** = change tabs

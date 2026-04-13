@@ -19,7 +19,7 @@ CHROMATIC is a lightweight color tool built for designers and developers. It liv
 
 ## Tech stack
 
-- [Electron](https://www.electronjs.org/) — desktop app framework
+- [Electron](https://www.electronjs.org/), desktop app framework
 - Vanilla JavaScript, HTML, CSS
 - Local JSON storage via Node.js `fs` module
 
@@ -34,4 +34,4 @@ npm start
 
 ## Shortcuts
 
-See [SHORTCUTS](docs/SHORTCUTS.md)
+See [SHORTCUTS](SHORTCUTS.md)
