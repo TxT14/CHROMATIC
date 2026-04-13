@@ -1,13 +1,15 @@
 const TOOLS = [
-  {id: 'hex',       name: 'Hex previewer',      color: '#e98b12',   icon: '-' },
-  {id: 'library',   name: 'Color library',      color: '#e91212',   icon: '-' },
-  {id: 'pipet',     name: 'Pipet tool',         color: '#c9e912',   icon: '-' },
-  {id: 'tint',      name: 'Tint generator',     color: '#3de912',   icon: '-' },
-  {id: 'harmony',   name: 'Kleur harmony',      color: '#12d0e9',   icon: '-' },
-  {id: 'gradient',  name: 'Gradient builder',   color: '#e912d7',   icon: '-' },
+  {id: 'hex',       name: 'Hex previewer',      color: '#E8A87C',   icon: '-' },
+  {id: 'library',   name: 'Color library',      color: '#85C1E9',   icon: '-' },
+  {id: 'pipet',     name: 'Pipet tool',         color: '#82E0AA',   icon: '-' },
+  {id: 'tint',      name: 'Tint generator',     color: '#F1948A',   icon: '-' },
+  {id: 'harmony',   name: 'Kleur harmony',      color: '#BB8FCE',   icon: '-' },
+  {id: 'gradient',  name: 'Gradient builder',   color: '#F7DC6F',   icon: '-' },
 ]
 
-const SETTINGS = { id: 'settings', name: 'Settings', color: '#101063', icon: '-' }
+const SETTINGS = { id: 'settings', name: 'Settings', color: '#A0A8C0', icon: '-' }
+
+let activeIndex = 0
 
 const svg = document.getElementById('nav-ring')
 
@@ -66,29 +68,42 @@ function makeSegment(startDeg, endDeg, color, index) {
   return path;
 }
 
+function activateSegment(index) {
+  segments.forEach((s, i) => {
+    const el = document.getElementById(`segment-${i}`)
+    const resetColor = s.type === 'settings' ? '#2a2a3e' : '#1a1a2e'
+    el.setAttribute('fill', resetColor)
+  })
+  const innerCircle = document.getElementById('inner-circle');
+  const seg = segments[index]
+  const tool = seg.type === 'settings' ? SETTINGS : TOOLS[index]
+  innerCircle.textContent = tool.name;
+  innerCircle.style.backgroundColor = tool.color
+  const activeColor = seg.type === 'settings' ? '#0ff507' : '#8d92e4'
+  const segmentElement = document.getElementById(`segment-${index}`)
+  segmentElement.setAttribute('fill', activeColor)
+}
+
 segments.forEach((seg, index) => {
   const color = seg.type === 'settings' ? '#2a2a3e' : '#1a1a2e';
   const path = makeSegment(seg.start, seg.end, color, index);
   svg.appendChild(path);
 });
 
-segments.forEach((seg, index, color) => {
+segments.forEach((seg, index) => {
   const segmentElement = document.getElementById(`segment-${index}`);
   segmentElement.addEventListener('click', () => {
-    segments.forEach((s, i) => {
-      const el = document.getElementById(`segment-${i}`)
-      const resetColor = s.type === 'settings' ? '#2a2a3e' : '#1a1a2e'
-      el.setAttribute('fill', resetColor)
-    })
-    console.log(`Er is geklikt op segment ${index}`);
-    const innerCircle = document.getElementById('inner-circle');
-    innerCircle.textContent = `Scherm ${index}`;
-    innerCircle.style.textAlign = 'center';
-    innerCircle.style.lineHeight = '340px';
-    innerCircle.style.color = 'white';
-    const tool = seg.type === 'settings' ? SETTINGS : TOOLS[index]
-    innerCircle.style.backgroundColor = tool.color
-    const activeColor = seg.type === 'settings' ? '#383a58' : '#8d92e4'
-    segmentElement.setAttribute('fill', activeColor)
+    activateSegment(index)
   });
+});
+
+window.addEventListener('wheel', (e) => {
+  if (e.ctrlKey) {
+    if (e.deltaY > 0) {
+      activeIndex = (activeIndex + 1) % segments.length
+    } else {
+      activeIndex = (activeIndex - 1 + segments.length) % segments.length
+    }
+    activateSegment(activeIndex)
+  }
 });
