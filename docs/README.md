@@ -35,3 +35,7 @@ npm start
 ## Shortcuts
 
 See [SHORTCUTS](SHORTCUTS.md)
+
+## Credits
+
+See [CREDITS](CREDITS.md)
